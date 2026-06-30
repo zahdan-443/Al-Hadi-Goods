@@ -1,7 +1,7 @@
 body{
-  font-family: Arial;
+  font-family:Arial;
   margin:0;
-  background:#f4f4f4;
+  background:#f4f6f8;
 }
 
 .header{
@@ -11,13 +11,29 @@ body{
   padding:15px;
 }
 
+.logo{
+  width:50px;
+}
+
+.nav{
+  display:flex;
+}
+
+.nav button{
+  flex:1;
+  padding:10px;
+  border:none;
+  background:#222;
+  color:white;
+}
+
 .container{
   display:flex;
   gap:10px;
   padding:15px;
 }
 
-.form, .preview{
+.form,.preview{
   flex:1;
   background:white;
   padding:15px;
@@ -36,6 +52,33 @@ button{
   margin-top:10px;
   background:#111827;
   color:white;
-  border:none;
-  cursor:pointer;
+}
+
+table{
+  width:100%;
+  border-collapse:collapse;
+  margin-top:10px;
+}
+
+td{
+  border:1px solid #ddd;
+  padding:6px;
+}
+
+.finance td{
+  background:#f1f5f9;
+}
+
+.erp-header{
+  display:flex;
+  gap:10px;
+  align-items:center;
+}
+
+.erp-header img{
+  width:40px;
+}
+
+.hidden{
+  display:none;
 }
