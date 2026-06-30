@@ -2,6 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Al-Hadi Goods ERP Bilty</title>
 
 <link rel="stylesheet" href="./style.css">
@@ -19,18 +20,18 @@
   <p>ERP Bilty System</p>
 </div>
 
-<!-- NAV -->
 <div class="nav">
   <button onclick="showTab('create')">Create Bilty</button>
   <button onclick="showTab('search')">Search Bilty</button>
 </div>
 
 <!-- CREATE -->
-<div id="create" class="tab">
+<div id="create" class="tab active">
 
-  <div class="container">
+  <div class="grid">
 
-    <div class="form">
+    <!-- FORM -->
+    <div class="card">
 
       <input id="from" placeholder="From">
       <input id="to" placeholder="To">
@@ -47,15 +48,16 @@
 
     </div>
 
-    <div class="preview">
+    <!-- PREVIEW -->
+    <div class="card">
 
-      <div id="biltyBox">
+      <div class="erp">
 
         <div class="erp-header">
-          <img id="pdfLogo" src="assets/logo.png">
+          <img src="assets/logo.png">
           <div>
             <h2>AL-HADI GOODS</h2>
-            <p>Bilty Receipt</p>
+            <small>Bilty Receipt</small>
           </div>
         </div>
 
@@ -63,19 +65,17 @@
 
         <h3 id="biltyNo"></h3>
 
-        <table>
-          <tr><td>From</td><td id="p_from"></td></tr>
-          <tr><td>To</td><td id="p_to"></td></tr>
-          <tr><td>Date</td><td id="p_date"></td></tr>
-          <tr><td>Consignor</td><td id="p_consignor"></td></tr>
-          <tr><td>Consignee</td><td id="p_consignee"></td></tr>
-        </table>
+        <div class="row"><b>From:</b> <span id="p_from"></span></div>
+        <div class="row"><b>To:</b> <span id="p_to"></span></div>
+        <div class="row"><b>Date:</b> <span id="p_date"></span></div>
+        <div class="row"><b>Consignor:</b> <span id="p_consignor"></span></div>
+        <div class="row"><b>Consignee:</b> <span id="p_consignee"></span></div>
 
-        <table class="finance">
-          <tr><td>Total</td><td id="p_total"></td></tr>
-          <tr><td>Advance</td><td id="p_advance"></td></tr>
-          <tr><td>Payable</td><td id="p_payable"></td></tr>
-        </table>
+        <hr>
+
+        <div class="row"><b>Total:</b> <span id="p_total"></span></div>
+        <div class="row"><b>Advance:</b> <span id="p_advance"></span></div>
+        <div class="row"><b>Payable:</b> <span id="p_payable"></span></div>
 
         <div id="qr"></div>
 
@@ -84,15 +84,20 @@
     </div>
 
   </div>
+
 </div>
 
 <!-- SEARCH -->
-<div id="search" class="tab hidden">
+<div id="search" class="tab">
 
-  <input id="searchInput" placeholder="Enter Bilty No (AH-0001)">
-  <button onclick="searchBilty()">Search</button>
+  <div class="card full">
 
-  <div id="result"></div>
+    <input id="searchInput" placeholder="Enter Bilty No (AH-0001)">
+    <button onclick="searchBilty()">Search</button>
+
+    <div id="result"></div>
+
+  </div>
 
 </div>
 
