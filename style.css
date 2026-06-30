@@ -1,0 +1,55 @@
+body{
+  margin:0;
+  font-family:Arial;
+  background:#f4f6f8;
+}
+
+.header{
+  background:#111827;
+  color:white;
+  text-align:center;
+  padding:15px;
+}
+
+.logo{
+  width:50px;
+}
+
+.container{
+  display:flex;
+  gap:10px;
+  padding:15px;
+}
+
+.form, .preview{
+  flex:1;
+  background:white;
+  padding:15px;
+  border-radius:10px;
+}
+
+input{
+  width:100%;
+  padding:10px;
+  margin:6px 0;
+}
+
+button{
+  width:100%;
+  padding:10px;
+  margin-top:10px;
+  background:#111827;
+  color:white;
+  border:none;
+}
+
+.row{
+  margin:6px 0;
+}
+
+.total{
+  background:#111827;
+  color:white;
+  padding:10px;
+  margin-top:10px;
+}
