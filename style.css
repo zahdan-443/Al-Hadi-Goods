@@ -1,56 +1,90 @@
-.erp{
-  border:2px solid #111827;
-  padding:15px;
-  border-radius:10px;
-  background:white;
+@media print {
+  body{
+    background:white;
+  }
+
+  .nav, .card:first-child{
+    display:none !important;
+  }
+
+  .card{
+    box-shadow:none;
+    width:100%;
+  }
+
+  .erp{
+    border:2px solid black;
+    padding:20px;
+    position:relative;
+  }
+
+  /* WATERMARK */
+  .erp::before{
+    content:"AL-HADI GOODS";
+    position:absolute;
+    top:40%;
+    left:10%;
+    font-size:60px;
+    color:rgba(0,0,0,0.05);
+    transform:rotate(-30deg);
+  }
 }
 
-/* HEADER LIKE OFFICIAL BILTY */
+/* ===== FINAL ERP DESIGN ===== */
+
+.erp{
+  border:2px solid #000;
+  padding:18px;
+  border-radius:6px;
+  background:white;
+  position:relative;
+}
+
+/* HEADER */
 .erp-header{
   display:flex;
   align-items:center;
   gap:12px;
-  border-bottom:2px solid #111827;
+  border-bottom:2px solid #000;
   padding-bottom:10px;
 }
 
 .erp-header img{
-  width:60px;
-  height:60px;
+  width:65px;
+  height:65px;
   object-fit:contain;
 }
 
 .erp-header h2{
   margin:0;
-  font-size:18px;
+  font-size:20px;
 }
 
 .erp-header small{
-  color:gray;
+  color:#444;
 }
 
-/* TITLE (BILTY NO LOOK) */
+/* BILTY NO BOX */
 #biltyNo{
   text-align:center;
-  font-size:18px;
-  margin:10px 0;
-  background:#111827;
+  font-weight:bold;
+  background:#000;
   color:white;
   padding:6px;
-  border-radius:5px;
+  margin-top:10px;
+  border-radius:4px;
 }
 
-/* TABLE STYLE BILTY FORMAT */
+/* ROW STYLE */
 .row{
   display:flex;
   justify-content:space-between;
   padding:6px 0;
-  border-bottom:1px dashed #ddd;
+  border-bottom:1px dashed #ccc;
 }
 
 .row b{
   width:40%;
-  color:#111827;
 }
 
 .row span{
@@ -58,19 +92,21 @@
   text-align:right;
 }
 
-/* FINANCIAL BOX SPECIAL STYLE */
-.row:last-child{
-  border-bottom:none;
-}
-
-/* QR POSITION LIKE REAL RECEIPT */
+/* QR POSITION */
 #qr{
   margin-top:15px;
   display:flex;
-  justify-content:center;
+  justify-content:flex-end;
 }
 
-/* CARD SHADOW = PRINT FEEL */
-.card{
-  box-shadow:0 2px 10px rgba(0,0,0,0.08);
+/* STAMP BOX */
+.erp::after{
+  content:"AUTHORIZED";
+  position:absolute;
+  bottom:20px;
+  left:20px;
+  border:2px solid black;
+  padding:6px 10px;
+  font-size:12px;
+  transform:rotate(-10deg);
 }
