@@ -83,3 +83,51 @@ function val(id){ return document.getElementById(id).value || ""; }
 function num(id){ return Number(document.getElementById(id).value || 0); }
 function set(id,val){ document.getElementById(id).innerText = val; }
 function get(id){ return document.getElementById(id).innerText; }
+// =========================
+// PDF DOWNLOAD FUNCTION
+// =========================
+
+function downloadPDF(){
+
+  const { jsPDF } = window.jspdf;
+
+  const doc = new jsPDF("p","mm","a4");
+
+  doc.setFontSize(18);
+  doc.text("AL-HADI GOODS", 70, 20);
+
+  doc.setFontSize(11);
+  doc.text("Transport & Logistics Bilty Receipt", 55, 28);
+
+  doc.line(10, 32, 200, 32);
+
+  doc.setFontSize(12);
+  doc.text("Bilty No: " + currentBilty, 10, 45);
+
+  doc.text("From: " + get("p_from"), 10, 55);
+  doc.text("To: " + get("p_to"), 10, 62);
+  doc.text("Date: " + get("p_date"), 10, 69);
+
+  doc.text("Consignor: " + get("p_consignor"), 10, 80);
+  doc.text("Consignee: " + get("p_consignee"), 10, 87);
+
+  doc.line(10, 92, 200, 92);
+
+  doc.setFontSize(13);
+  doc.text("Financial Summary", 10, 102);
+
+  doc.setFontSize(12);
+  doc.text("Total: " + get("p_total"), 10, 112);
+  doc.text("Advance: " + get("p_advance"), 10, 119);
+  doc.text("Payable: " + get("p_payable"), 10, 126);
+
+  // QR CODE (if exists)
+  const qrCanvas = document.querySelector("#qr canvas");
+
+  if(qrCanvas){
+    const qrImg = qrCanvas.toDataURL("image/png");
+    doc.addImage(qrImg, "PNG", 150, 40, 40, 40);
+  }
+
+  doc.save(currentBilty + ".pdf");
+}
