@@ -1,14 +1,18 @@
 let currentBilty = "";
+let historyData = [];
+
+function showTab(tab){
+  document.getElementById("create").classList.add("hidden");
+  document.getElementById("search").classList.add("hidden");
+
+  document.getElementById(tab).classList.remove("hidden");
+}
 
 function getBiltyNo(){
 
   let no = localStorage.getItem("bilty_no");
-
-  if(!no){
-    no = 1;
-  } else {
-    no = parseInt(no) + 1;
-  }
+  if(!no) no = 1;
+  else no = parseInt(no) + 1;
 
   localStorage.setItem("bilty_no", no);
 
@@ -20,55 +24,96 @@ function generate(){
   const bilty = getBiltyNo();
   currentBilty = bilty;
 
-  const from = document.getElementById("from").value;
-  const to = document.getElementById("to").value;
-  const date = document.getElementById("date").value;
+  const from = fromVal("from");
+  const to = fromVal("to");
+  const date = fromVal("date");
 
-  const consignor = document.getElementById("consignor").value;
-  const consignee = document.getElementById("consignee").value;
+  const consignor = fromVal("consignor");
+  const consignee = fromVal("consignee");
 
-  const total = Number(document.getElementById("total").value || 0);
-  const advance = Number(document.getElementById("advance").value || 0);
+  const total = num("total");
+  const advance = num("advance");
   const payable = total - advance;
 
-  document.getElementById("biltyNo").innerText = bilty;
+  set("biltyNo", bilty);
 
-  document.getElementById("p_from").innerText = from;
-  document.getElementById("p_to").innerText = to;
-  document.getElementById("p_date").innerText = date;
+  set("p_from", from);
+  set("p_to", to);
+  set("p_date", date);
+  set("p_consignor", consignor);
+  set("p_consignee", consignee);
 
-  document.getElementById("p_consignor").innerText = consignor;
-  document.getElementById("p_consignee").innerText = consignee;
+  set("p_total", total);
+  set("p_advance", advance);
+  set("p_payable", payable);
 
-  document.getElementById("p_total").innerText = total;
-  document.getElementById("p_advance").innerText = advance;
-  document.getElementById("p_payable").innerText = payable;
-
-  // QR FIX
+  // QR
   document.getElementById("qr").innerHTML = "";
 
   new QRCode(document.getElementById("qr"), {
-    text: bilty + " | " + from + " → " + to + " | Payable: " + payable,
-    width: 120,
-    height: 120
+    text: JSON.stringify({bilty,from,to,total,advance,payable}),
+    width:120,
+    height:120
   });
+
+  // SAVE LOCAL HISTORY (for search page)
+  historyData.push({bilty,from,to,consignor,consignee,total,advance,payable,date});
 
 }
 
 function downloadPDF(){
 
   const { jsPDF } = window.jspdf;
-  const doc = new jsPDF();
+  const doc = new jsPDF("p","mm","a4");
 
-  doc.text("AL-HADI GOODS BILTY", 20, 20);
-  doc.text("Bilty: " + currentBilty, 20, 30);
+  doc.addImage(document.getElementById("pdfLogo"), "PNG", 10, 10, 20, 20);
 
-  doc.text("From: " + document.getElementById("p_from").innerText, 20, 50);
-  doc.text("To: " + document.getElementById("p_to").innerText, 20, 60);
+  doc.setFontSize(16);
+  doc.text("AL-HADI GOODS", 40, 20);
 
-  doc.text("Total: " + document.getElementById("p_total").innerText, 20, 80);
-  doc.text("Advance: " + document.getElementById("p_advance").innerText, 20, 90);
-  doc.text("Payable: " + document.getElementById("p_payable").innerText, 20, 100);
+  doc.setFontSize(12);
+  doc.text("Bilty: " + currentBilty, 10, 40);
+
+  doc.text("From: " + get("p_from"), 10, 55);
+  doc.text("To: " + get("p_to"), 10, 62);
+
+  doc.text("Total: " + get("p_total"), 10, 80);
+  doc.text("Advance: " + get("p_advance"), 10, 88);
+  doc.text("Payable: " + get("p_payable"), 10, 96);
+
+  // QR inside PDF
+  const qrCanvas = document.querySelector("#qr canvas");
+  if(qrCanvas){
+    const qrImg = qrCanvas.toDataURL("image/png");
+    doc.addImage(qrImg, "PNG", 150, 40, 40, 40);
+  }
 
   doc.save(currentBilty + ".pdf");
 }
+
+function searchBilty(){
+
+  let key = document.getElementById("searchInput").value;
+
+  let found = historyData.find(x => x.bilty === key);
+
+  let res = document.getElementById("result");
+
+  if(!found){
+    res.innerHTML = "Not Found";
+    return;
+  }
+
+  res.innerHTML = `
+    <h3>${found.bilty}</h3>
+    <p>${found.from} → ${found.to}</p>
+    <p>Total: ${found.total}</p>
+    <p>Payable: ${found.payable}</p>
+  `;
+}
+
+// helpers
+function set(id,val){ document.getElementById(id).innerText = val; }
+function get(id){ return document.getElementById(id).innerText; }
+function fromVal(id){ return document.getElementById(id).value; }
+function num(id){ return Number(document.getElementById(id).value||0); }
