@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Al-Hadi Goods - Bilty System</title>
+
+<link rel="stylesheet" href="style.css">
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+</head>
+
+<body>
+
+<div class="header">
+  <img src="assets/logo.png" class="logo">
+  <h1>AL-HADI GOODS</h1>
+  <p>Bilty Generator System</p>
+</div>
+
+<div class="container">
+
+<!-- FORM -->
+<div class="form">
+
+  <input id="from" placeholder="From">
+  <input id="to" placeholder="To">
+  <input id="date" placeholder="Date">
+
+  <input id="consignor" placeholder="Consignor">
+  <input id="consignee" placeholder="Consignee">
+
+  <input id="total" placeholder="Total Amount">
+  <input id="advance" placeholder="Advance Amount">
+
+  <button onclick="generate()">Generate Bilty</button>
+  <button onclick="downloadPDF()">Download PDF</button>
+
+</div>
+
+<!-- PREVIEW -->
+<div class="preview">
+
+  <h3>Bilty Preview</h3>
+
+  <div id="biltyBox">
+
+    <div id="biltyNo"></div>
+
+    <div class="row"><b>From:</b> <span id="p_from"></span></div>
+    <div class="row"><b>To:</b> <span id="p_to"></span></div>
+    <div class="row"><b>Date:</b> <span id="p_date"></span></div>
+
+    <div class="row"><b>Consignor:</b> <span id="p_consignor"></span></div>
+    <div class="row"><b>Consignee:</b> <span id="p_consignee"></span></div>
+
+    <div class="row"><b>Total:</b> <span id="p_total"></span></div>
+    <div class="row"><b>Advance:</b> <span id="p_advance"></span></div>
+
+    <div class="total">Payable: <span id="p_payable"></span></div>
+
+    <div id="qr"></div>
+
+  </div>
+
+</div>
+
+</div>
+
+<script src="app.js"></script>
+
+</body>
+</html>
