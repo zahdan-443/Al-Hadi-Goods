@@ -1,18 +1,15 @@
 let currentBilty = "";
-let historyData = [];
 
-function showTab(tab){
-  document.getElementById("create").classList.add("hidden");
-  document.getElementById("search").classList.add("hidden");
+function showTab(id){
 
-  document.getElementById(tab).classList.remove("hidden");
+  document.querySelectorAll(".tab").forEach(t => t.classList.remove("active"));
+  document.getElementById(id).classList.add("active");
 }
 
 function getBiltyNo(){
 
-  let no = localStorage.getItem("bilty_no");
-  if(!no) no = 1;
-  else no = parseInt(no) + 1;
+  let no = localStorage.getItem("bilty_no") || 0;
+  no = parseInt(no) + 1;
 
   localStorage.setItem("bilty_no", no);
 
@@ -21,44 +18,38 @@ function getBiltyNo(){
 
 function generate(){
 
-  const bilty = getBiltyNo();
-  currentBilty = bilty;
+  currentBilty = getBiltyNo();
 
-  const from = fromVal("from");
-  const to = fromVal("to");
-  const date = fromVal("date");
+  let from = val("from");
+  let to = val("to");
+  let date = val("date");
 
-  const consignor = fromVal("consignor");
-  const consignee = fromVal("consignee");
+  let consignor = val("consignor");
+  let consignee = val("consignee");
 
-  const total = num("total");
-  const advance = num("advance");
-  const payable = total - advance;
+  let total = num("total");
+  let advance = num("advance");
+  let payable = total - advance;
 
-  set("biltyNo", bilty);
-
+  set("biltyNo", currentBilty);
   set("p_from", from);
   set("p_to", to);
   set("p_date", date);
   set("p_consignor", consignor);
   set("p_consignee", consignee);
-
   set("p_total", total);
   set("p_advance", advance);
   set("p_payable", payable);
 
-  // QR
-  document.getElementById("qr").innerHTML = "";
+  // QR FIX (NO EMPTY ERROR)
+  let qrDiv = document.getElementById("qr");
+  qrDiv.innerHTML = "";
 
-  new QRCode(document.getElementById("qr"), {
-    text: JSON.stringify({bilty,from,to,total,advance,payable}),
+  new QRCode(qrDiv, {
+    text: currentBilty + " | " + from + " → " + to,
     width:120,
     height:120
   });
-
-  // SAVE LOCAL HISTORY (for search page)
-  historyData.push({bilty,from,to,consignor,consignee,total,advance,payable,date});
-
 }
 
 function downloadPDF(){
@@ -66,10 +57,8 @@ function downloadPDF(){
   const { jsPDF } = window.jspdf;
   const doc = new jsPDF("p","mm","a4");
 
-  doc.addImage(document.getElementById("pdfLogo"), "PNG", 10, 10, 20, 20);
-
   doc.setFontSize(16);
-  doc.text("AL-HADI GOODS", 40, 20);
+  doc.text("AL-HADI GOODS", 60, 20);
 
   doc.setFontSize(12);
   doc.text("Bilty: " + currentBilty, 10, 40);
@@ -81,39 +70,16 @@ function downloadPDF(){
   doc.text("Advance: " + get("p_advance"), 10, 88);
   doc.text("Payable: " + get("p_payable"), 10, 96);
 
-  // QR inside PDF
-  const qrCanvas = document.querySelector("#qr canvas");
-  if(qrCanvas){
-    const qrImg = qrCanvas.toDataURL("image/png");
-    doc.addImage(qrImg, "PNG", 150, 40, 40, 40);
-  }
-
   doc.save(currentBilty + ".pdf");
 }
 
 function searchBilty(){
-
-  let key = document.getElementById("searchInput").value;
-
-  let found = historyData.find(x => x.bilty === key);
-
-  let res = document.getElementById("result");
-
-  if(!found){
-    res.innerHTML = "Not Found";
-    return;
-  }
-
-  res.innerHTML = `
-    <h3>${found.bilty}</h3>
-    <p>${found.from} → ${found.to}</p>
-    <p>Total: ${found.total}</p>
-    <p>Payable: ${found.payable}</p>
-  `;
+  document.getElementById("result").innerHTML =
+    "Search feature will be connected to storage upgrade next step.";
 }
 
-// helpers
+/* helpers */
+function val(id){ return document.getElementById(id).value || ""; }
+function num(id){ return Number(document.getElementById(id).value || 0); }
 function set(id,val){ document.getElementById(id).innerText = val; }
 function get(id){ return document.getElementById(id).innerText; }
-function fromVal(id){ return document.getElementById(id).value; }
-function num(id){ return Number(document.getElementById(id).value||0); }
