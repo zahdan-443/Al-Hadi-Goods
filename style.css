@@ -1,7 +1,7 @@
 body{
+  font-family: Arial;
   margin:0;
-  font-family:Arial;
-  background:#f4f6f8;
+  background:#f4f4f4;
 }
 
 .header{
@@ -9,10 +9,6 @@ body{
   color:white;
   text-align:center;
   padding:15px;
-}
-
-.logo{
-  width:50px;
 }
 
 .container{
@@ -31,7 +27,7 @@ body{
 input{
   width:100%;
   padding:10px;
-  margin:6px 0;
+  margin:5px 0;
 }
 
 button{
@@ -41,15 +37,5 @@ button{
   background:#111827;
   color:white;
   border:none;
-}
-
-.row{
-  margin:6px 0;
-}
-
-.total{
-  background:#111827;
-  color:white;
-  padding:10px;
-  margin-top:10px;
+  cursor:pointer;
 }
