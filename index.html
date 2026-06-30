@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Al-Hadi Goods Bilty System</title>
+<title>Al-Hadi Goods ERP Bilty</title>
 
 <link rel="stylesheet" href="./style.css">
 
@@ -14,56 +14,85 @@
 <body>
 
 <div class="header">
-  <h1>🚛 AL-HADI GOODS</h1>
-  <p>Bilty Generator System</p>
+  <img src="assets/logo.png" class="logo">
+  <h1>AL-HADI GOODS</h1>
+  <p>ERP Bilty System</p>
 </div>
 
-<div class="container">
-
-<!-- FORM -->
-<div class="form">
-
-  <input id="from" placeholder="From">
-  <input id="to" placeholder="To">
-  <input id="date" placeholder="Date">
-
-  <input id="consignor" placeholder="Consignor">
-  <input id="consignee" placeholder="Consignee">
-
-  <input id="total" placeholder="Total Amount">
-  <input id="advance" placeholder="Advance Amount">
-
-  <button onclick="generate()">Generate Bilty</button>
-  <button onclick="downloadPDF()">Download PDF</button>
-
+<!-- NAV -->
+<div class="nav">
+  <button onclick="showTab('create')">Create Bilty</button>
+  <button onclick="showTab('search')">Search Bilty</button>
 </div>
 
-<!-- PREVIEW -->
-<div class="preview">
+<!-- CREATE -->
+<div id="create" class="tab">
 
-  <h3>Preview</h3>
+  <div class="container">
 
-  <div id="biltyBox">
+    <div class="form">
 
-    <h2 id="biltyNo"></h2>
+      <input id="from" placeholder="From">
+      <input id="to" placeholder="To">
+      <input id="date" placeholder="Date">
 
-    <p><b>From:</b> <span id="p_from"></span></p>
-    <p><b>To:</b> <span id="p_to"></span></p>
-    <p><b>Date:</b> <span id="p_date"></span></p>
+      <input id="consignor" placeholder="Consignor">
+      <input id="consignee" placeholder="Consignee">
 
-    <p><b>Consignor:</b> <span id="p_consignor"></span></p>
-    <p><b>Consignee:</b> <span id="p_consignee"></span></p>
+      <input id="total" placeholder="Total Amount">
+      <input id="advance" placeholder="Advance Amount">
 
-    <p><b>Total:</b> <span id="p_total"></span></p>
-    <p><b>Advance:</b> <span id="p_advance"></span></p>
+      <button onclick="generate()">Generate Bilty</button>
+      <button onclick="downloadPDF()">Download PDF</button>
 
-    <h3>Payable: <span id="p_payable"></span></h3>
+    </div>
 
-    <div id="qr"></div>
+    <div class="preview">
+
+      <div id="biltyBox">
+
+        <div class="erp-header">
+          <img id="pdfLogo" src="assets/logo.png">
+          <div>
+            <h2>AL-HADI GOODS</h2>
+            <p>Bilty Receipt</p>
+          </div>
+        </div>
+
+        <hr>
+
+        <h3 id="biltyNo"></h3>
+
+        <table>
+          <tr><td>From</td><td id="p_from"></td></tr>
+          <tr><td>To</td><td id="p_to"></td></tr>
+          <tr><td>Date</td><td id="p_date"></td></tr>
+          <tr><td>Consignor</td><td id="p_consignor"></td></tr>
+          <tr><td>Consignee</td><td id="p_consignee"></td></tr>
+        </table>
+
+        <table class="finance">
+          <tr><td>Total</td><td id="p_total"></td></tr>
+          <tr><td>Advance</td><td id="p_advance"></td></tr>
+          <tr><td>Payable</td><td id="p_payable"></td></tr>
+        </table>
+
+        <div id="qr"></div>
+
+      </div>
+
+    </div>
 
   </div>
-
 </div>
+
+<!-- SEARCH -->
+<div id="search" class="tab hidden">
+
+  <input id="searchInput" placeholder="Enter Bilty No (AH-0001)">
+  <button onclick="searchBilty()">Search</button>
+
+  <div id="result"></div>
 
 </div>
 
